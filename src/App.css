@@ -1,3 +1,23 @@
+:root {
+  --bg-clr: #ffffff;
+  --text-clr: #202124;
+}
+
 .App {
-  text-align: center;
+  transition: all 300ms ease;
+  min-height: 100vh;
+}
+
+.app-dark {
+  --bg-clr: #202124;
+  --text-clr: #fafafa;
+  background-color: var(--bg-clr);
+  color: var(--text-clr);
+}
+
+.app-light {
+  --bg-clr: #ffffff;
+  --text-clr: #282828;
+  background-color: var(--bg-clr);
+  color: var(--text-clr);
 }
