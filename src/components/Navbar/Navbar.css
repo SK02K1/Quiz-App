@@ -11,7 +11,7 @@
 }
 
 .logo > a {
-  color: var(--clr-accent-500);
+  color: var(--text-clr);
 }
 
 .btn-theme-toggle {
