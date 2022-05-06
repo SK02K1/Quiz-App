@@ -1,0 +1,21 @@
+.navbar {
+  background-color: transparent;
+  box-shadow: var(--shadow);
+  justify-content: space-between;
+}
+
+.navbar,
+.nav-controls {
+  display: flex;
+  align-items: center;
+}
+
+.logo > a {
+  color: var(--text-clr);
+}
+
+.btn-theme-toggle {
+  cursor: pointer;
+  transition: transform 200ms ease;
+  font-size: 2rem;
+}
