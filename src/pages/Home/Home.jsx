@@ -4,9 +4,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { useCategories } from '../../contexts';
 import { CategoryCard, Spinner } from '../../components';
 import { db } from '../../firebase';
+import { useDocumentTitle } from '../../hooks';
 
 export const Home = () => {
   const { categories, setCategories } = useCategories();
+  useDocumentTitle('Home');
 
   useEffect(() => {
     if (!categories) {
