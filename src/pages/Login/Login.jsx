@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { useAuth } from '../../contexts';
+import { useDocumentTitle } from '../../hooks';
 import { loginFormFields, testCredentials } from '../../utils';
 
 export const Login = () => {
+  useDocumentTitle('Login');
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
