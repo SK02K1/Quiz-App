@@ -56,12 +56,29 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    const logoutPromise = new Promise((resolve) => {
+      setTimeout(() => {
+        setUser(null);
+        navigate(-1);
+        resolve('Successfully logged out');
+      }, 1200);
+    });
+    toast.promise(logoutPromise, {
+      loading: 'Logging out',
+      success: (msg) => msg,
+      error: 'Failed in logging out',
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem('quizzz-user', JSON.stringify(user));
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, loginWithGoogle }}>
+    <AuthContext.Provider
+      value={{ user, signup, login, loginWithGoogle, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
