@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { loginFormFields, testCredentials } from '../../utils';
 import { FcGoogle } from 'react-icons/fc';
+import { useAuth } from '../../contexts';
+import { loginFormFields, testCredentials } from '../../utils';
 
 export const Login = () => {
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
   });
+
+  const { login } = useAuth();
+  const { email, password } = loginFormData;
 
   const inputChangeHandler = (e) => {
     setLoginFormData((prevFormData) => ({
@@ -20,9 +24,14 @@ export const Login = () => {
     setLoginFormData(testCredentials);
   };
 
+  const loginHandler = (e) => {
+    e.preventDefault();
+    login({ email, password });
+  };
+
   return (
     <div>
-      <form className='form'>
+      <form onSubmit={loginHandler} className='form'>
         <h1 className='text-xl text-center m-xs-tb'>Login</h1>
         {loginFormFields.map(({ id, label, name, type }) => {
           return (

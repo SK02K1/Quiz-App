@@ -1,6 +1,10 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { auth } from '../firebase';
 
@@ -12,6 +16,8 @@ const AuthProvider = ({ children }) => {
   );
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   const signup = async ({ name, email, password }) => {
     try {
@@ -25,12 +31,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const login = async ({ email, password }) => {
+    try {
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      toast.success('Successfully logged in');
+      setUser(res.user);
+      navigate(from, { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('quizzz-user', JSON.stringify(user));
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, signup }}>
+    <AuthContext.Provider value={{ user, signup, login }}>
       {children}
     </AuthContext.Provider>
   );
