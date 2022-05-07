@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -15,6 +17,7 @@ const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem('quizzz-user'))
   );
 
+  const googleProvider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -42,12 +45,23 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      toast.success('Successfully logged in');
+      setUser(res.user);
+      navigate(from, { replace: true });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('quizzz-user', JSON.stringify(user));
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, signup, login }}>
+    <AuthContext.Provider value={{ user, signup, login, loginWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

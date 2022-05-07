@@ -10,7 +10,7 @@ export const Login = () => {
     password: '',
   });
 
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const { email, password } = loginFormData;
 
   const inputChangeHandler = (e) => {
@@ -60,7 +60,11 @@ export const Login = () => {
           Use test credentials
         </button>
         <div className='text-center m-xs-tb'>OR</div>
-        <button className='btn btn-primary outlined' type='button'>
+        <button
+          onClick={loginWithGoogle}
+          className='btn btn-primary outlined'
+          type='button'
+        >
           <FcGoogle className='text-xl m-xs-r' /> Sign in with Google
         </button>
 
