@@ -61,7 +61,7 @@ export const Login = () => {
         >
           Use test credentials
         </button>
-        <div className='text-center m-xs-tb'>OR</div>
+        <div className='text-center m-sm-tb'>OR</div>
         <button
           onClick={loginWithGoogle}
           className='btn btn-primary outlined'
