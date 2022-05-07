@@ -1,6 +1,7 @@
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../contexts';
+import { ProfileDropdown } from '../index';
 
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -20,6 +21,7 @@ export const Navbar = () => {
         >
           {theme === 'dark' ? 'light' : 'dark'}_mode
         </span>
+        <ProfileDropdown />
       </div>
     </nav>
   );

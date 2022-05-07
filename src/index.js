@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './contexts/theme-context';
-import { CategoriesProvider } from './contexts';
+import { AuthProvider, CategoriesProvider } from './contexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +11,9 @@ root.render(
     <BrowserRouter>
       <ThemeProvider>
         <CategoriesProvider>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
         </CategoriesProvider>
       </ThemeProvider>
     </BrowserRouter>

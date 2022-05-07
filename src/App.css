@@ -22,3 +22,11 @@
   background-color: var(--bg-clr);
   color: var(--text-clr);
 }
+
+.avoid-text-highlight {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
