@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts';
+import { useDocumentTitle } from '../../hooks';
 import { signupFormFields } from '../../utils';
 
 export const Signup = () => {
+  useDocumentTitle('Signup');
   const { signup } = useAuth();
   const [signupFormData, setSignupFormData] = useState({
     name: '',
