@@ -21,7 +21,7 @@ export const Navbar = () => {
         >
           {theme === 'dark' ? 'light' : 'dark'}_mode
         </span>
-        <Link to={`/${user ? 'dashboard' : 'login'}`}>
+        <Link to={`/${user ? 'profile' : 'login'}`}>
           <span className='material-symbols-rounded m-sm-l icon-user'>
             {user ? 'account_circle' : 'login'}
           </span>
