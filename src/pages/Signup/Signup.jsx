@@ -30,6 +30,7 @@ export const Signup = () => {
   return (
     <div>
       <form onSubmit={signupHandler} className='form'>
+        <h1 className='text-xl text-center m-xs-tb'>Signup</h1>
         {signupFormFields.map(({ id, label, type, name }) => {
           return (
             <label className='m-sm-t' key={id}>
