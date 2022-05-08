@@ -1,0 +1,15 @@
+.profile-card {
+  width: max-content;
+  padding: 1rem;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  border-radius: var(--br);
+  border: 2px solid var(--text-clr);
+  box-shadow: var(--shadow);
+}
+
+.profile-card .avatar {
+  width: 6rem;
+  height: 6rem;
+}

@@ -1,11 +1,12 @@
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../contexts';
+import { useAuth, useTheme } from '../../contexts';
 
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
+  const { user } = useAuth();
   return (
-    <nav className='navbar'>
+    <nav className='navbar avoid-text-highlight'>
       <div className='logo'>
         <Link className='text-2xl' to='/'>
           Quizzz
@@ -20,6 +21,11 @@ export const Navbar = () => {
         >
           {theme === 'dark' ? 'light' : 'dark'}_mode
         </span>
+        <Link to={`/${user ? 'profile' : 'login'}`}>
+          <span className='material-symbols-rounded m-sm-l icon-user'>
+            {user ? 'account_circle' : 'login'}
+          </span>
+        </Link>
       </div>
     </nav>
   );
