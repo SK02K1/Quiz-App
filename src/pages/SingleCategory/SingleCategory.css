@@ -1,0 +1,10 @@
+.quiz-list-wrapper {
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .quiz-list-wrapper {
+    width: 60%;
+  }
+}
