@@ -37,6 +37,7 @@
   box-shadow: var(--shadow-lg);
   border-radius: var(--br-xl);
   width: 90%;
+  border: 2px solid var(--text-clr);
 }
 
 .form-link {
