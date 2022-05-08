@@ -16,7 +16,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/categories' element={<SingleCategory />} />
+        <Route path='/categories/:categoryName' element={<SingleCategory />} />
         {/* Private Routes */}
         <Route element={<RequireAuth />}>
           <Route path='/profile' element={<Profile />} />

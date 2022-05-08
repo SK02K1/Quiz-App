@@ -1,6 +1,6 @@
 import './SingleCategory.css';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import { Spinner, QuizDetailsCard } from '../../components';
 import { db } from '../../firebase';
@@ -9,15 +9,13 @@ import { useDocumentTitle } from '../../hooks';
 export const SingleCategory = () => {
   const [quizzes, setQuizzes] = useState(null);
   const [showLoader, setShowLoader] = useState(false);
-  const [searchParams] = useSearchParams();
-  const categoryName = searchParams.get('category');
-  const categoryID = searchParams.get('categoryID');
+  const { categoryName } = useParams();
   useDocumentTitle(categoryName);
 
   useEffect(() => {
     const quizzesQuery = query(
       collection(db, 'quizzes'),
-      where('categoryID', '==', categoryID)
+      where('category', '==', categoryName)
     );
 
     (async () => {
@@ -36,7 +34,7 @@ export const SingleCategory = () => {
         setShowLoader(false);
       }
     })();
-  }, [categoryID]);
+  }, [categoryName]);
 
   return (
     <div>

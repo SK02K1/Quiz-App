@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import './CategoryCard.css';
 
 export const CategoryCard = ({ categoryInfo }) => {
-  const { id, categoryName, categoryImg } = categoryInfo;
+  const { categoryName, categoryImg } = categoryInfo;
   const navigate = useNavigate();
   const navigateToSingleCategory = () => {
-    navigate(`/categories?category=${categoryName}&categoryID=${id}`);
+    navigate(`/categories/${categoryName}`);
   };
   return (
     <div onClick={navigateToSingleCategory} className='category-card'>
