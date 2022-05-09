@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { Home, Login, Profile, Signup, SingleCategory } from './pages';
+import { Home, Login, Profile, Rules, Signup, SingleCategory } from './pages';
 import { Navbar, RequireAuth } from './components';
 import { useTheme } from './contexts';
 import { Toaster } from 'react-hot-toast';
@@ -20,6 +20,7 @@ function App() {
         {/* Private Routes */}
         <Route element={<RequireAuth />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/rules/:quizID' element={<Rules />} />
         </Route>
       </Routes>
     </div>

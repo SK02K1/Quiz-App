@@ -1,0 +1,3 @@
+export const QUIZ_ACTIONS = {
+  SET_SELECTED_QUIZ: 'SET_SELECTED_QUIZ',
+};
