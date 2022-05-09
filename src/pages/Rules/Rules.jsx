@@ -1,6 +1,6 @@
 import './Rules.css';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuiz } from '../../contexts';
 import { QUIZ_ACTIONS } from '../../utils';
 import { Spinner } from '../../components';
@@ -42,7 +42,9 @@ export const Rules = () => {
           <p className='text-base m-sm-tb'>
             To start, click the "Start" button.
           </p>
-          <button className='btn btn-primary'>Start</button>
+          <Link to={`/question/${quizID}`} className='btn btn-primary'>
+            Start
+          </Link>
         </div>
       )}
     </div>
