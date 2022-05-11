@@ -33,7 +33,7 @@ export const Question = () => {
   }, [quizID, selectedQuiz, dispatchQuiz]);
 
   const { quizTitle, quizQuestions } = selectedQuiz ?? {};
-  const { question, options } =
+  const { question, options, questionIMG } =
     selectedQuiz?.quizQuestions[currentQuestionNumber - 1] ?? {};
 
   const optionClickHandler = async (answer) => {
@@ -90,6 +90,7 @@ export const Question = () => {
             <h2 className='text-base text-center question m-lg-tb'>
               {question}
             </h2>
+            {questionIMG && <img src={questionIMG} alt='question img' />}
             <div className='options m-xs-b'>
               {options.map((option) => {
                 return (
