@@ -1,7 +1,7 @@
 import './Question.css';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { QUIZ_ACTIONS } from '../../utils';
 import { Spinner } from '../../components';
 import { useAuth, useQuiz } from '../../contexts';
@@ -52,6 +52,7 @@ export const Question = () => {
         userID: user?.uid,
         questions: quizQuestions,
         selectedOptions: [...selectedOptions, answer],
+        createAt: serverTimestamp(),
       });
       toast.promise(res, {
         loading: 'Submitting Quiz',
