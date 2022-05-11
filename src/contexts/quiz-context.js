@@ -10,8 +10,8 @@ const initialQuizState = {
   selectedQuizID: null,
   selectedQuiz: null,
   isLoaderActive: false,
-  currentQuizScore: 0,
   currentQuestionNumber: 1,
+  selectedOptions: [],
 };
 
 const QuizProvider = ({ children }) => {

@@ -5,6 +5,7 @@ import {
   Login,
   Profile,
   Question,
+  Result,
   Rules,
   Signup,
   SingleCategory,
@@ -30,6 +31,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/rules/:quizID' element={<Rules />} />
           <Route path='/question/:quizID' element={<Question />} />
+          <Route path='/results/:resultID' element={<Result />} />
         </Route>
       </Routes>
     </div>
