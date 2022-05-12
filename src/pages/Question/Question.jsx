@@ -1,17 +1,16 @@
 import './Question.css';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { useAuth, useQuiz } from '../../contexts';
 import { QUIZ_ACTIONS } from '../../utils';
 import { Spinner } from '../../components';
-import { useAuth, useQuiz } from '../../contexts';
-import { db } from '../../firebase';
-import toast from 'react-hot-toast';
+import { submitQuiz } from '../../services';
 
 export const Question = () => {
   const { quizID } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  let isMounted = false;
 
   const {
     quizState: {
@@ -19,9 +18,43 @@ export const Question = () => {
       isLoaderActive,
       currentQuestionNumber,
       selectedOptions,
+      timer,
     },
     dispatchQuiz,
   } = useQuiz();
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      dispatchQuiz({ type: QUIZ_ACTIONS.DECREMENT_TIMER_VALUE });
+    }, 1000);
+
+    if (timer === 0) {
+      if (currentQuestionNumber < quizQuestions.length) {
+        clearInterval(id);
+        dispatchQuiz({
+          type: QUIZ_ACTIONS.ADD_ANSWER_TO_SELECTED_OPTIONS,
+          payload: { answer: null },
+        });
+        dispatchQuiz({ type: QUIZ_ACTIONS.INCREMENT_QUESTION_NUMBER });
+        dispatchQuiz({ type: QUIZ_ACTIONS.RESET_TIMER_VALUE });
+      } else {
+        (async () => {
+          clearInterval(id);
+          submitQuiz({
+            user,
+            selectedOptions,
+            answer: null,
+            navigate,
+            quizQuestions,
+          });
+        })();
+      }
+    }
+
+    return () => {
+      clearInterval(id);
+    };
+  }, [timer]);
 
   useEffect(() => {
     if (!selectedQuiz) {
@@ -32,6 +65,15 @@ export const Question = () => {
     }
   }, [quizID, selectedQuiz, dispatchQuiz]);
 
+  useEffect(() => {
+    return () => {
+      if (isMounted) {
+        dispatchQuiz({ type: QUIZ_ACTIONS.RESET_QUIZ_STATE });
+      }
+      isMounted = true;
+    };
+  }, []);
+
   const { quizTitle, quizQuestions } = selectedQuiz ?? {};
   const { question, options, questionIMG } =
     selectedQuiz?.quizQuestions[currentQuestionNumber - 1] ?? {};
@@ -39,6 +81,7 @@ export const Question = () => {
   const optionClickHandler = async (answer) => {
     if (currentQuestionNumber < quizQuestions.length) {
       dispatchQuiz({ type: QUIZ_ACTIONS.INCREMENT_QUESTION_NUMBER });
+      dispatchQuiz({ type: QUIZ_ACTIONS.RESET_TIMER_VALUE });
     }
 
     if ([...selectedOptions, answer].length !== quizQuestions.length) {
@@ -47,21 +90,13 @@ export const Question = () => {
         payload: { answer },
       });
     } else {
-      const newResultDocumentRef = doc(collection(db, 'results'));
-      const res = setDoc(newResultDocumentRef, {
-        userID: user?.uid,
-        questions: quizQuestions,
-        selectedOptions: [...selectedOptions, answer],
-        createAt: serverTimestamp(),
+      submitQuiz({
+        user,
+        selectedOptions,
+        answer,
+        navigate,
+        quizQuestions,
       });
-      toast.promise(res, {
-        loading: 'Submitting Quiz',
-        success: 'Successfuly submitted',
-        error: 'Failed in submitting quiz',
-      });
-      await res;
-      dispatchQuiz({ type: QUIZ_ACTIONS.RESET_QUIZ_STATE });
-      navigate(`/results/${newResultDocumentRef.id}`, { replace: true });
     }
   };
 
@@ -83,8 +118,12 @@ export const Question = () => {
                   {currentQuestionNumber} / {quizQuestions.length}
                 </span>
               </div>
-              <div className='score-status'>
-                TIMER: <span className='text-highlight'>30</span>
+              <div className='timer-status'>
+                <span>TIMER</span>
+                <span className='material-symbols-rounded m-xs-lr'>
+                  timer
+                </span>{' '}
+                :<span className='text-highlight m-xs-l'>{timer}</span>
               </div>
             </div>
             <h2 className='text-base text-center question m-lg-tb'>

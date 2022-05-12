@@ -16,7 +16,8 @@
   border: 2px solid var(--text-clr);
 }
 
-.quiz-status {
+.quiz-status,
+.timer-status {
   display: flex;
   justify-content: space-between;
   align-items: center;

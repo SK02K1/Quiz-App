@@ -20,8 +20,20 @@ export const quizReducer = (state, { type, payload }) => {
         ...state,
         selectedOptions: state.selectedOptions.concat(payload.answer),
       };
+    case QUIZ_ACTIONS.DECREMENT_TIMER_VALUE:
+      return {
+        ...state,
+        timer: state.timer - 1,
+      };
+    case QUIZ_ACTIONS.RESET_TIMER_VALUE:
+      return { ...state, timer: 30 };
     case QUIZ_ACTIONS.RESET_QUIZ_STATE:
-      return { ...state, selectedOptions: [], currentQuestionNumber: 1 };
+      return {
+        ...state,
+        selectedOptions: [],
+        currentQuestionNumber: 1,
+        timer: 30,
+      };
     default:
       return { ...state };
   }

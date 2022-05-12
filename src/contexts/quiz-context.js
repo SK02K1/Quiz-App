@@ -12,6 +12,7 @@ const initialQuizState = {
   isLoaderActive: false,
   currentQuestionNumber: 1,
   selectedOptions: [],
+  timer: 30,
 };
 
 const QuizProvider = ({ children }) => {
