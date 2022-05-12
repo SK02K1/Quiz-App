@@ -1,0 +1,13 @@
+.result-card {
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: var(--br-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--text-clr);
+}
+
+@media screen and (min-width: 768px) {
+  .result-card {
+    width: 80%;
+  }
+}

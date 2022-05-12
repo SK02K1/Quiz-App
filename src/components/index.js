@@ -4,3 +4,4 @@ export { Spinner } from './Spinner/Spinner';
 export { RequireAuth } from './RequireAuth/RequireAuth';
 export { ProfileCard } from './ProfileCard/ProfileCard';
 export { QuizDetailsCard } from './QuizDetailsCard/QuizDetailsCard';
+export { ResultListing } from './ResultListing/ResultListing';

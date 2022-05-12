@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './contexts/theme-context';
-import { AuthProvider, CategoriesProvider } from './contexts';
+import { AuthProvider, CategoriesProvider, QuizProvider } from './contexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +12,9 @@ root.render(
       <ThemeProvider>
         <CategoriesProvider>
           <AuthProvider>
-            <App />
+            <QuizProvider>
+              <App />
+            </QuizProvider>
           </AuthProvider>
         </CategoriesProvider>
       </ThemeProvider>
