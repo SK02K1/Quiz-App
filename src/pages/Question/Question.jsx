@@ -1,5 +1,5 @@
 import './Question.css';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth, useQuiz } from '../../contexts';
 import { QUIZ_ACTIONS } from '../../utils';
@@ -10,7 +10,7 @@ export const Question = () => {
   const { quizID } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  let isMounted = false;
+  const isMounted = useRef(false);
 
   const {
     quizState: {
@@ -22,6 +22,32 @@ export const Question = () => {
     },
     dispatchQuiz,
   } = useQuiz();
+
+  const { quizTitle, quizQuestions } = selectedQuiz ?? {};
+  const { question, options, questionIMG } =
+    selectedQuiz?.quizQuestions[currentQuestionNumber - 1] ?? {};
+
+  const optionClickHandler = async (answer) => {
+    if (currentQuestionNumber < quizQuestions.length) {
+      dispatchQuiz({ type: QUIZ_ACTIONS.INCREMENT_QUESTION_NUMBER });
+      dispatchQuiz({ type: QUIZ_ACTIONS.RESET_TIMER_VALUE });
+    }
+
+    if ([...selectedOptions, answer].length !== quizQuestions.length) {
+      dispatchQuiz({
+        type: QUIZ_ACTIONS.ADD_ANSWER_TO_SELECTED_OPTIONS,
+        payload: { answer },
+      });
+    } else {
+      submitQuiz({
+        user,
+        selectedOptions,
+        answer,
+        navigate,
+        quizQuestions,
+      });
+    }
+  };
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -54,7 +80,15 @@ export const Question = () => {
     return () => {
       clearInterval(id);
     };
-  }, [timer]);
+  }, [
+    timer,
+    currentQuestionNumber,
+    dispatchQuiz,
+    navigate,
+    selectedOptions,
+    user,
+    quizQuestions,
+  ]);
 
   useEffect(() => {
     if (!selectedQuiz) {
@@ -67,38 +101,12 @@ export const Question = () => {
 
   useEffect(() => {
     return () => {
-      if (isMounted) {
+      if (isMounted.current) {
         dispatchQuiz({ type: QUIZ_ACTIONS.RESET_QUIZ_STATE });
       }
-      isMounted = true;
+      isMounted.current = true;
     };
-  }, []);
-
-  const { quizTitle, quizQuestions } = selectedQuiz ?? {};
-  const { question, options, questionIMG } =
-    selectedQuiz?.quizQuestions[currentQuestionNumber - 1] ?? {};
-
-  const optionClickHandler = async (answer) => {
-    if (currentQuestionNumber < quizQuestions.length) {
-      dispatchQuiz({ type: QUIZ_ACTIONS.INCREMENT_QUESTION_NUMBER });
-      dispatchQuiz({ type: QUIZ_ACTIONS.RESET_TIMER_VALUE });
-    }
-
-    if ([...selectedOptions, answer].length !== quizQuestions.length) {
-      dispatchQuiz({
-        type: QUIZ_ACTIONS.ADD_ANSWER_TO_SELECTED_OPTIONS,
-        payload: { answer },
-      });
-    } else {
-      submitQuiz({
-        user,
-        selectedOptions,
-        answer,
-        navigate,
-        quizQuestions,
-      });
-    }
-  };
+  }, [dispatchQuiz]);
 
   return (
     <div>
