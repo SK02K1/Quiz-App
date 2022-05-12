@@ -129,8 +129,14 @@ export const Question = () => {
             <h2 className='text-base text-center question m-lg-tb'>
               {question}
             </h2>
-            {questionIMG && <img src={questionIMG} alt='question img' />}
-            <div className='options m-xs-b'>
+            {questionIMG && (
+              <img
+                className='question-img'
+                src={questionIMG}
+                alt='question img'
+              />
+            )}
+            <div className='options m-xs-tb'>
               {options.map((option) => {
                 return (
                   <button
