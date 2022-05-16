@@ -100,11 +100,11 @@ export const Question = () => {
   }, [quizID, selectedQuiz, dispatchQuiz]);
 
   useEffect(() => {
+    isMounted.current = true;
     return () => {
       if (isMounted.current) {
         dispatchQuiz({ type: QUIZ_ACTIONS.RESET_QUIZ_STATE });
       }
-      isMounted.current = true;
     };
   }, [dispatchQuiz]);
 
